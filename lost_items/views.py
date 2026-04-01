@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from rest_framework import generics, permissions
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 from .models import LostItem
@@ -9,7 +9,7 @@ from .serializers import LostItemSerializer
 class LostItemCreateView(generics.CreateAPIView):
     queryset = LostItem.objects.all()
     serializer_class = LostItemSerializer
-    permission_classes = [permissions.IsAuthenticated]  # Only logged-in users can post
+    permission_classes = [IsAuthenticated]  # Only logged-in users can post
 
 # List all Lost Items
 class LostItemListView(generics.ListAPIView):
@@ -25,12 +25,12 @@ class LostItemDetailView(generics.RetrieveAPIView):
 class LostItemUpdateView(generics.UpdateAPIView):
     queryset = LostItem.objects.all()
     serializer_class = LostItemSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 # Delete Lost Item
 class LostItemDeleteView(generics.DestroyAPIView):
     queryset = LostItem.objects.all()
     serializer_class = LostItemSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
