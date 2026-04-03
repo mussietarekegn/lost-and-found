@@ -24,6 +24,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/lost/', include('lost_items.urls')),  # Lost Items API
+    path('api/search/', include('search.urls')),  # Search API
 ]
 
 if settings.DEBUG:
