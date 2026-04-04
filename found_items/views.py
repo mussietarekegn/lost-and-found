@@ -26,3 +26,26 @@ def get_found_item(request, pk):
     
     serializer = FoundItemSerializer(item)
     return Response(serializer.data)
+
+@api_view(['PUT'])
+def update_found_item(request, pk):
+    try:
+        item = FoundItem.objects.get(id=pk)
+    except FoundItem.DoesNotExist:
+        return Response({"error": "Not found"})
+
+    serializer = FoundItemSerializer(item, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors)
+
+@api_view(['DELETE'])
+def delete_found_item(request, pk):
+    try:
+        item = FoundItem.objects.get(id=pk)
+    except FoundItem.DoesNotExist:
+        return Response({"error": "Not found"})
+
+    item.delete()
+    return Response({"message": "Deleted successfully"})
