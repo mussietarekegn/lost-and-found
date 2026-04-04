@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/lost/', include('lost_items.urls')),  # Lost Items API
     path('api/search/', include('search.urls')),  # Search API
+    path('found/', include('found_items.urls')), # Found API
 ]
 
 if settings.DEBUG:
