@@ -32,5 +32,3 @@ class LostItemDeleteView(generics.DestroyAPIView):
     queryset = LostItem.objects.all()
     serializer_class = LostItemSerializer
     permission_classes = [IsAuthenticated]
-
-
