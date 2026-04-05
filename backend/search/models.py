@@ -13,5 +13,5 @@ class Match(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"Match: {self.lost_item.title} ↔ {self.found_item.title}"
+def __str__(self):
+    return f"Match: {self.lost_item.title} ↔ {self.found_item.title}"
