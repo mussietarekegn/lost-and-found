@@ -1,16 +1,16 @@
 from django.urls import path
 from .views import (
-    LostItemCreateView,
-    LostItemListView,
-    LostItemDetailView,
-    LostItemUpdateView,
-    LostItemDeleteView
+    create_lost_item,
+    get_all_lost_items,
+    get_lost_item,
+    update_lost_item,
+    delete_lost_item
 )
 
 urlpatterns = [
-    path('', LostItemListView.as_view(), name='lost-list'),
-    path('create/', LostItemCreateView.as_view(), name='lost-create'),
-    path('<int:pk>/', LostItemDetailView.as_view(), name='lost-detail'),
-    path('update/<int:pk>/', LostItemUpdateView.as_view(), name='lost-update'),
-    path('delete/<int:pk>/', LostItemDeleteView.as_view(), name='lost-delete'),
+    path('', get_all_lost_items, name='lost-list'),
+    path('create/', create_lost_item, name='lost-create'),
+    path('<int:pk>/', get_lost_item, name='lost-detail'),
+    path('update/<int:pk>/', update_lost_item, name='lost-update'),
+    path('delete/<int:pk>/', delete_lost_item, name='lost-delete'),
 ]

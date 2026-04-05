@@ -1,34 +1,51 @@
-from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
-# Create your views here.
-
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from .models import LostItem
 from .serializers import LostItemSerializer
 
-# Createing Lost Item
-class LostItemCreateView(generics.CreateAPIView):
-    queryset = LostItem.objects.all()
-    serializer_class = LostItemSerializer
-    permission_classes = [IsAuthenticated]  # Only logged-in users can post
+@api_view(['POST'])
+def create_lost_item(request):
+    serializer = LostItemSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors)
 
-# List all Lost Items
-class LostItemListView(generics.ListAPIView):
-    queryset = LostItem.objects.all()
-    serializer_class = LostItemSerializer
+@api_view(['GET'])
+def get_all_lost_items(request):
+    items = LostItem.objects.all()
+    serializer = LostItemSerializer(items, many=True)
+    return Response(serializer.data)
 
-# Retrieve single Lost Item
-class LostItemDetailView(generics.RetrieveAPIView):
-    queryset = LostItem.objects.all()
-    serializer_class = LostItemSerializer
+@api_view(['GET'])
+def get_lost_item(request, pk):
+    try:
+        item = LostItem.objects.get(id=pk)
+    except LostItem.DoesNotExist:
+        return Response({"error": "Not found"})
+    
+    serializer = LostItemSerializer(item)
+    return Response(serializer.data)
 
-# Update Lost Item
-class LostItemUpdateView(generics.UpdateAPIView):
-    queryset = LostItem.objects.all()
-    serializer_class = LostItemSerializer
-    permission_classes = [IsAuthenticated]
+@api_view(['PUT'])
+def update_lost_item(request, pk):
+    try:
+        item = LostItem.objects.get(id=pk)
+    except LostItem.DoesNotExist:
+        return Response({"error": "Not found"})
 
-# Delete Lost Item
-class LostItemDeleteView(generics.DestroyAPIView):
-    queryset = LostItem.objects.all()
-    serializer_class = LostItemSerializer
-    permission_classes = [IsAuthenticated]
+    serializer = LostItemSerializer(item, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors)
+
+@api_view(['DELETE'])
+def delete_lost_item(request, pk):
+    try:
+        item = LostItem.objects.get(id=pk)
+    except LostItem.DoesNotExist:
+        return Response({"error": "Not found"})
+
+    item.delete()
+    return Response({"message": "Deleted successfully"})
