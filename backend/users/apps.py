@@ -1,5 +1,4 @@
 from django.apps import AppConfig
 
-
-class UsersConfig(AppConfig):
+class LostItemsConfig(AppConfig):
     name = 'users'
