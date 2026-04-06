@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'found_items',
     'notifications',
     'search',
+    'users.apps.UsersConfig',
     'rest_framework',
 ]
 
